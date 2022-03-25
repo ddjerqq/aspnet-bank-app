@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.15" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\bank_mock.Core\bank_mock.Core.csproj" />
+    </ItemGroup>
+
+</Project>

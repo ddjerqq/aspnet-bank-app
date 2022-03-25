@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bank_mock", "bank_mock\bank_mock.csproj", "{A925E977-28C9-41F6-B3FD-DB850ACFE280}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bank_mock.Core", "bank_mock.Core\bank_mock.Core.csproj", "{9826E072-56E6-4EB1-8FF9-E4D6E9921455}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A925E977-28C9-41F6-B3FD-DB850ACFE280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A925E977-28C9-41F6-B3FD-DB850ACFE280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A925E977-28C9-41F6-B3FD-DB850ACFE280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A925E977-28C9-41F6-B3FD-DB850ACFE280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9826E072-56E6-4EB1-8FF9-E4D6E9921455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9826E072-56E6-4EB1-8FF9-E4D6E9921455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9826E072-56E6-4EB1-8FF9-E4D6E9921455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9826E072-56E6-4EB1-8FF9-E4D6E9921455}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
