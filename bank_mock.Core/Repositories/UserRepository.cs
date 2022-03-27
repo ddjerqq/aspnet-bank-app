@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bank_mock.Core.Repositories
 {
+    // es aris `User`Repository, mashin rat gvinda aq generic interfacebi?
     public sealed class DataRepository<TEntity> : IDataRepository<TEntity>
     where TEntity : BaseEntity
     {

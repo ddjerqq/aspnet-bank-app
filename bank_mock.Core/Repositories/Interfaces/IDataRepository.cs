@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace bank_mock.Core.Repositories.Interfaces
 {
-    public interface IDataRepository<TEntity>
+    public interface IDataRepository<TEntity> 
         where TEntity : BaseEntity
     {
         public List<TEntity> GetAll();

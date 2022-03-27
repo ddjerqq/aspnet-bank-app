@@ -1,21 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using bank_mock.Core.Contexts;
-using bank_mock.Core.Models.Interfaces;
+using bank_mock.Core.Models;
 using bank_mock.Core.Repositories;
 using bank_mock.Core.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace bank_mock
@@ -42,12 +33,21 @@ namespace bank_mock
 
             services.AddDbContext<UserContext>(oa =>
                 {
-                    oa.UseInMemoryDatabase("users");
+                    oa.UseInMemoryDatabase("bank_mock");
                 }
             );
+            
+            // TODO es sworia?? tu IDataRepository<User>?
+            // TODO                                                       amas DataRepository rato qvia
+            //services.AddScoped(typeof(IDataRepository<>), typeof(DataRepository<>));
+            // TODO aq rato aris interface, da mere inheritori?
+            services.AddScoped<IDataRepository<User>, UserReository>();
 
-            services.AddScoped(typeof(IDataRepository<>), typeof(DataRepository<>));
-            services.AddScoped<IUserRepo, UserRepo>();
+            
+            // TODO es cudia? ase ar unda iyos wesit?
+            // microsoft docs qonda ro Interfaceis tipis servici iyos implementorze
+            // services.AddScoped(typeof(AccountRepository), typeof(AccountRepository));
+            services.AddScoped<IDataRepository<Account>, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
