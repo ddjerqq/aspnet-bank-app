@@ -1,7 +1,13 @@
 using bank_mock.Core.Contexts;
 using bank_mock.Core.Models;
+using bank_mock.Core.Profiles;
 using bank_mock.Core.Repositories;
 using bank_mock.Core.Repositories.Interfaces;
+using bank_mock.Core.Services;
+using bank_mock.Core.Services.Interfaces;
+using bank_mock.Core.Validators;
+using bank_mock.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,53 +26,55 @@ namespace bank_mock
         
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(UserProfile));
+            
+            services.AddMvc(o => 
+                    o.Filters.Add(typeof(ModelStateValidator)))
+                .AddFluentValidation(x =>
+                    x.RegisterValidatorsFromAssemblyContaining<AccountValidator>());
+            
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "bank_mock", Version = "v1"});
-            });
-
-            services.AddRouting(ro => ro.LowercaseUrls = true);
-
-            services.AddDbContext<UserContext>(oa =>
-                {
-                    oa.UseInMemoryDatabase("bank_mock");
-                }
-            );
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "bank_mock", Version = "v1"}));
             
-            // TODO es sworia?? tu IDataRepository<User>?
-            // TODO                                                       amas DataRepository rato qvia
-            //services.AddScoped(typeof(IDataRepository<>), typeof(DataRepository<>));
-            // TODO aq rato aris interface, da mere inheritori?
-            services.AddScoped<IDataRepository<User>, UserReository>();
-
+            services.AddRouting(o => o.LowercaseUrls = true);
             
-            // TODO es cudia? ase ar unda iyos wesit?
-            // microsoft docs qonda ro Interfaceis tipis servici iyos implementorze
-            // services.AddScoped(typeof(AccountRepository), typeof(AccountRepository));
-            services.AddScoped<IDataRepository<Account>, AccountRepository>();
+            // databases
+            services.AddDbContext<ApplicationDatabaseContext>(o =>
+                o.UseInMemoryDatabase("bank_mock"));
+            
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService,    AccountService>();
+            services.AddScoped<IUserRepository,    UserRepository>();
+            services.AddScoped<IUserService,       UserService>();
+            
+            // LBANK_DEV =
+            // (DESCRIPTION =
+            //      (ADDRESS_LIST =
+            //          (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.21.61)(PORT = 1521))
+            //      )
+            //      (CONNECT_DATA =
+            //          (SERVICE_NAME = LBANKDEV)
+            //      )
+            // )
+            
+            // services.AddDbContext<AccountContext>(o =>
+            //     o.Use());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+
             app.UseDeveloperExceptionPage();
             
-            app.UseSwagger();
-            
             app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "bank_mock v1");
-            });
-
-            app.UseHttpsRedirection();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "bank_mock v1"));
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

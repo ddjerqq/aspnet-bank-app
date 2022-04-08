@@ -7,45 +7,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bank_mock.Core.Repositories
 {
-    public class AccountRepository : IDataRepository<Account>
+    public class AccountRepository : IAccountRepository
     {
-        private readonly AccountContext _accountContext;
-        public DbSet<Account> DbSet { get; }
+        private readonly ApplicationDatabaseContext _accountContext;
 
-        // TODO aq IDataRepository<Account> repository es xom ar mwirdeba
-        // context-is magivrad
-        public AccountRepository(AccountContext context)
+        public AccountRepository(ApplicationDatabaseContext context)
         {
             _accountContext = context;
-            DbSet = _accountContext.Set<Account>();
         }
         
         public List<Account> GetAll()
         {
-            return DbSet.ToList();
+            return _accountContext.Accounts.ToList();
         }
-
+        
         public Account Get(long id)
         {
-            return DbSet.FirstOrDefault(e => 
+            return _accountContext.Accounts.FirstOrDefault(e => 
                 e.Id == id);
         }
-
-        public void Add(Account entity)
+        
+        public void Add(Account acc)
         {
-            DbSet.Add(entity);
-            _accountContext.SaveChanges();
+            _accountContext.Accounts.Add(acc);
+        }
+        
+        public void Update(Account acc)
+        {
+            _accountContext.Accounts.Update(acc);
+        }
+        
+        public void Delete(Account acc)
+        {
+            _accountContext.Accounts.Remove(acc);
         }
 
-        public void Update(Account entity)
+        public void SaveChanges()
         {
-            DbSet.Update(entity);
-            _accountContext.SaveChanges();
-        }
-
-        public void Delete(Account entity)
-        {
-            DbSet.Remove(entity);
             _accountContext.SaveChanges();
         }
     }

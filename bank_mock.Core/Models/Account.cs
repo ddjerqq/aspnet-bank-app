@@ -6,5 +6,8 @@ namespace bank_mock.Core.Models
     {
         public decimal AvailableFunds { get; set; }
         public string IBAN { get; set; }
+        
+        public User User { get; set; }
+        public long UserId { get; set; }
     }
 }

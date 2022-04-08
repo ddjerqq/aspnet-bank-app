@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bank_mock.Core.Contexts
 {
-    public class UserContext : DbContext
+    public class ApplicationDatabaseContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options) :
+        public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) :
             base(options)
         {
             
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }
