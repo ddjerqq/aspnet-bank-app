@@ -8,46 +8,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bank_mock.Core.Repositories
 {
-    // es aris `User`Repository, mashin rat gvinda aq generic interfacebi?
-    public sealed class DataRepository<TEntity> : IDataRepository<TEntity>
-    where TEntity : BaseEntity
+    public sealed class UserRepository : IUserRepository
     {
-        // TODO es rato arsebobs lol
-        // mtliani generic interface,
-        // 
-        private readonly UserContext _userContext;
+        private readonly ApplicationDatabaseContext _context;
         
-        public DbSet<TEntity> DbSet { get; }
-
-        public DataRepository(UserContext userContext)
+        public UserRepository(ApplicationDatabaseContext context)
         {
-            _userContext = userContext;
-            DbSet = _userContext.Set<TEntity>();
+            _context = context;
         }
 
-        public List<TEntity> GetAll()
+        public List<User> GetAll()
         {
-            return DbSet.ToList();
+            return _context.Users.ToList();
         }
 
-        public TEntity Get(long id)
+        public User Get(long id)
         {
-            return DbSet.FirstOrDefault(i => i.Id == id);
+            return _context.Users.FirstOrDefault(i => i.Id == id);
         }
 
-        public void Add(TEntity entity)
+        public void Add(User user)
         {
-            DbSet.Add(entity);
+            _context.Users.Add(user);
         }
 
-        public void Update(TEntity entity)
+        public void Update(User user)
         {
-            DbSet.Update(entity);
+            _context.Users.Update(user);
         }
 
-        public void Delete(TEntity entity)
+        public void Delete(User user)
         {
-            DbSet.Remove(entity);
+            _context.Users.Remove(user);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

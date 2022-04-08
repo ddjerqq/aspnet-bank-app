@@ -7,14 +7,11 @@ using bank_mock.Core.Services.Interfaces;
 
 namespace bank_mock.Core.Services
 {
-    public class UserService : IService<User>
+    public class UserService : IUserService
     {
-        // TODO amis interface aq rat gvinda?
-        // ar sheidzleba ro UserRepo iyos calke da UserRepo iyos
-        // IDataRepositoris inheritori?
-        private readonly IUserRepo _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepo userRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -32,16 +29,19 @@ namespace bank_mock.Core.Services
         public void Add(User entity)
         {
             _userRepository.Add(entity);
+            _userRepository.SaveChanges();
         }
 
         public void Update(User entity)
         {
             _userRepository.Update(entity);
+            _userRepository.SaveChanges();
         }
 
         public void Delete(User entity)
         {
             _userRepository.Delete(entity);
+            _userRepository.SaveChanges();
         }
     }
 }
