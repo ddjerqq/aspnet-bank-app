@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using bank_mock.Core.Models;
 using bank_mock.Core.Services.Interfaces;
@@ -21,9 +22,9 @@ namespace bank_mock.Controllers
         }
         
         [HttpGet("get/")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<User> users = _userService.GetAll();
+            List<User> users = await _userService.GetAllAsync();
             
             if (users.Count == 0)
             {
@@ -35,9 +36,9 @@ namespace bank_mock.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> Get(long id)
         {
-            User user = _userService.Get(id);
+            User user = await _userService.GetAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -48,26 +49,26 @@ namespace bank_mock.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(UserDto userDto)
+        public async Task<IActionResult> Add(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            _userService.Add(user);
+            await _userService.AddAsync(user);
             return Ok();
         }
         
         [HttpPut("update")]
-        public IActionResult Update(UserDto userDto)
+        public async Task<IActionResult> Update(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            _userService.Update(user);
+            await _userService.UpdateAsync(user);
             return Ok();
         }
         
         [HttpDelete("delete/{id}")]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            User user = _userService.Get(id);
-            _userService.Delete(user);
+            User user = await _userService.GetAsync(id);
+            await _userService.DeleteAsync(user);
             return Ok();
         }
     }

@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using bank_mock.Core.Models.Interfaces;
 
 namespace bank_mock.Core.Services.Interfaces
 {
     public interface IService<TEntity>
+        where TEntity : BaseEntity
     {
-        List<TEntity> GetAll();
-        TEntity Get(long id);
-        void Add(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> GetAsync(long id);
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }

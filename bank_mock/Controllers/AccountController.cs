@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using bank_mock.Core.Models;
 using bank_mock.Core.Services.Interfaces;
@@ -21,9 +22,9 @@ namespace bank_mock.Controllers
         }
 
         [HttpGet("get/")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<Account> accounts = _accountService.GetAll();
+            List<Account> accounts = await _accountService.GetAllAsync();
             
             if (accounts.Count == 0)
             {
@@ -35,9 +36,9 @@ namespace bank_mock.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> Get(long id)
         {
-            Account account = _accountService.Get(id);
+            Account account = await _accountService.GetAsync(id);
             if (account == null)
             {
                 return NotFound();
@@ -48,43 +49,27 @@ namespace bank_mock.Controllers
         }
         
         [HttpPost("add")]
-        public IActionResult Add(AccountDto accountDto)
+        public async Task<IActionResult> Add(AccountCreateDto accountDto)
         {
             var account = _mapper.Map<Account>(accountDto);
-            _accountService.Add(account);
+            await _accountService.AddAsync(account);
             return Ok();
         }
         
         [HttpPut("update")]
-        public IActionResult Update(AccountDto accountDto)
+        public async Task<IActionResult> Update(AccountDto accountDto)
         {
             var account = _mapper.Map<Account>(accountDto);
-            _accountService.Update(account);
+            await _accountService.UpdateAsync(account);
             return Ok();
         }
         
         [HttpDelete("delete/{id}")]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            Account account = _accountService.Get(id);
-            _accountService.Delete(account);
+            Account account = await _accountService.GetAsync(id);
+            await _accountService.DeleteAsync(account);
             return Ok();
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

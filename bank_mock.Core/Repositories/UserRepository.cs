@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using bank_mock.Core.Contexts;
 using bank_mock.Core.Models;
 using bank_mock.Core.Models.Interfaces;
@@ -17,19 +18,19 @@ namespace bank_mock.Core.Repositories
             _context = context;
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAllAsync()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();
         }
 
-        public User Get(long id)
+        public async Task<User> GetAsync(long id)
         {
-            return _context.Users.FirstOrDefault(i => i.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public void Add(User user)
+        public async Task AddAsync(User user)
         {
-            _context.Users.Add(user);
+           await _context.Users.AddAsync(user);
         }
 
         public void Update(User user)
@@ -42,9 +43,9 @@ namespace bank_mock.Core.Repositories
             _context.Users.Remove(user);
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -7,7 +7,21 @@ namespace bank_mock.Core.Profiles
     {
         public AccountProfile()
         {
-            CreateMap<Account, AccountDto>().ReverseMap();
-        }
+            CreateMap<Account, AccountDto>()
+                .ForMember(dest=>dest.UserId, 
+                    opt=>
+                        opt.MapFrom(src=>src.User.Id))
+                .ForMember(dest=>dest.User, 
+                    opt=>
+                        opt.MapFrom(src=>src.User));
+            
+            CreateMap<AccountDto, Account>()
+                .ForMember(dest=>dest.User, 
+                    opt=>
+                        opt.MapFrom(src=>src.User))
+                .ForMember(dest=>dest.UserId, 
+                    opt=>
+                        opt.MapFrom(src=>src.UserId));
+        }   
     }
 }

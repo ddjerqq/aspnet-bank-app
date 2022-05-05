@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using bank_mock.Core.Models;
 using bank_mock.Core.Repositories;
 using bank_mock.Core.Repositories.Interfaces;
@@ -15,32 +16,32 @@ namespace bank_mock.Core.Services
             _accountRepository = repository;
         }
         
-        public List<Account> GetAll()
+        public async Task<List<Account>> GetAllAsync()
         {
-            return _accountRepository.GetAll();
+            return await _accountRepository.GetAllAsync();
         }
 
-        public Account Get(long id)
+        public async Task<Account> GetAsync(long id)
         {
-            return _accountRepository.Get(id);
+            return await _accountRepository.GetAsync(id);
         }
 
-        public void Add(Account entity)
+        public async Task AddAsync(Account entity)
         {
-            _accountRepository.Add(entity);
-            _accountRepository.SaveChanges();
+            await _accountRepository.AddAsync(entity);
+            await _accountRepository.SaveChangesAsync();
         }
 
-        public void Update(Account entity)
+        public async Task UpdateAsync(Account entity)
         {
             _accountRepository.Update(entity);
-            _accountRepository.SaveChanges();
+            await _accountRepository.SaveChangesAsync();
         }
 
-        public void Delete(Account entity)
+        public async Task DeleteAsync(Account entity)
         {
             _accountRepository.Delete(entity);
-            _accountRepository.SaveChanges();
+            await _accountRepository.SaveChangesAsync();
         }
     }
 }
