@@ -50,19 +50,6 @@ namespace bank_mock
             services.AddScoped<IAccountService,    AccountService>();
             services.AddScoped<IUserRepository,    UserRepository>();
             services.AddScoped<IUserService,       UserService>();
-            
-            // LBANK_DEV =
-            // (DESCRIPTION =
-            //      (ADDRESS_LIST =
-            //          (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.21.61)(PORT = 1521))
-            //      )
-            //      (CONNECT_DATA =
-            //          (SERVICE_NAME = LBANKDEV)
-            //      )
-            // )
-            
-            // services.AddDbContext<AccountContext>(o =>
-            //     o.Use());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
